@@ -9,8 +9,12 @@
         <div class="container section-padding">
             <div class="row">
                 <div class="titles">
-                    <h1 class="section-title"><wwObject v-bind:ww-object="section.data.title"></wwObject></h1>
-                    <h2 class="section-subtitle"><wwObject v-bind:ww-object="section.data.subtitle"></wwObject></h2>
+                    <h1 class="section-title">
+                        <wwObject v-bind:ww-object="section.data.title"></wwObject>
+                    </h1>
+                    <h2 class="section-subtitle">
+                        <wwObject v-bind:ww-object="section.data.subtitle"></wwObject>
+                    </h2>
                 </div>
             </div>
 
@@ -26,7 +30,7 @@
                     </div>
 
                     <!-- wwManager:start -->
-                    <div class="edit-button-top-left" @click="removeBlock(index)">
+                    <div v-show="editMode" class="edit-button-top-left" @click="removeBlock(index)">
                         <i class="wwi wwi-delete" aria-hidden="true"></i>
                     </div>
                     <!-- wwManager:end -->
@@ -34,7 +38,7 @@
                 </div>
 
                 <!-- wwManager:start -->
-                <div class="blocks add-block">
+                <div v-show="editMode" class="blocks add-block">
                     <div class="plus" @click="addBlock()">
                         <i class="wwi wwi-add" aria-hidden="true"></i>
                     </div>
@@ -58,39 +62,40 @@ export default {
     computed: {
         section() {
             return this.sectionCtrl.get();
+        },
+        editMode() {
+            return this.sectionCtrl.getEditMode() == 'CONTENT'
         }
     },
     created() {
-        //Initialize section data
         this.initData()
     },
     methods: {
         getNewBlock() {
-            const data = {}
-
-            data.img = wwLib.wwObject.getDefault({ type: 'ww-image' });
-            data.text = wwLib.wwObject.getDefault({ type: 'ww-text', data: { text: 'Start editing by hitting the pen!' } });
-            data.text2 = wwLib.wwObject.getDefault({ type: 'ww-text', data: { text: '' } });
-            data.title = wwLib.wwObject.getDefault({ type: 'ww-text', data: { text: 'Rows of three images (or less) to illustrate your story.' } });
-            data.button = wwLib.wwObject.getDefault({ type: 'ww-button', data: { color: 'black', borderColor: 'black' } });
-    
+            const data = {
+                 img: wwLib.wwObject.getDefault({ type: 'ww-image' }),
+                text: wwLib.wwObject.getDefault({ type: 'ww-text' }),
+                text2: wwLib.wwObject.getDefault({ type: 'ww-text' }),
+                title: wwLib.wwObject.getDefault({ type: 'ww-text' }),
+                button: wwLib.wwObject.getDefault({ type: 'ww-button', data: { color: 'black', borderColor: 'black' } })
+            }
             return data;
         },
         initData() {
-            this.section.data = this.section.data || {"isNew":false,"title":{"data":{"popup":null},"font":"","link":"","size":"text-big","text":{"fr_FR":"This is the Triple Section"},"type":"text","zoom":-1,"align":"","class":["ww-anim-fade"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.21146643111968833},"blocks":[{"img":{"data":{"popup":null},"font":"","link":null,"size":"","text":{"fr_FR":""},"type":"text","zoom":-1,"align":"","class":["ww-anim-grow"],"image":"https://wewebprod.s3-eu-west-1.amazonaws.com/public/images/urban/GirlBridge.jpg","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.3279281607910942},"text":{"data":{"popup":null},"font":"sans-serif","link":"","size":"text-xsmall","text":{"fr_FR":"Start editing by hitting the pen!"},"type":"text","zoom":-1,"align":"center","class":["ww-anim-fade","ww-animspeed-slow"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.36958215402524},"text2":{"data":{"popup":null},"font":"","link":"","size":"","text":{"fr_FR":""},"type":"text","zoom":-1,"align":"","class":[],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.6075502245627609},"title":{"data":{"popup":null},"font":"sans-serif","link":"","size":"text-xsmall","text":{"fr_FR":"Rows of three images (or less) to illustrate your story."},"type":"text","zoom":-1,"align":"center","class":["ww-anim-fade","ww-animspeed-slow"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.6546189619287959},"button":{"data":{"popup":null},"font":"","link":"http://getweweb.com","size":"","text":{"fr_FR":"Call to action"},"type":"text","zoom":-1,"align":"","class":["ww-class-font-size-xsmall","ww-class-btn-border-small","ww-class-btn-shadow-bottom-small","ww-class-btn-padding-small","ww-class-btn-format-round-small","ww-anim-fade"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"#000000","backgroundColor":"#FFFFFF"},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.7361627781705045},"textImg":"Coucou !","uniqueId":2,"titleStyle":{"size":"text-small"}},{"img":{"data":{"popup":null},"font":"","link":null,"size":"","text":{"fr_FR":""},"type":"text","zoom":-1,"align":"","class":["ww-anim-grow"],"image":"https://wewebprod.s3-eu-west-1.amazonaws.com/designs/46/sections/70Qry53tJrWrtS2zCrkuDME2XJgBjb66.jpg","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.2108381846122258},"text":{"data":{"popup":null},"font":"sans-serif","link":"","size":"text-xsmall","text":{"fr_FR":"Don't forget to use the animations for a stunning effect!"},"type":"text","zoom":-1,"align":"center","class":["ww-anim-fade","ww-animspeed-slow"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.40493381725059474},"text2":{"data":{"popup":null},"font":"","link":"","size":"","text":{"fr_FR":""},"type":"text","zoom":-1,"align":"","class":[],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.0595187148767411},"title":{"data":{"popup":null},"font":"sans-serif","link":"","size":"text-xsmall","text":{"fr_FR":"Click on any icon to edit specific items (change pics, effects...)"},"type":"text","zoom":-1,"align":"center","class":["ww-anim-fade","ww-animspeed-slow"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.08031675437451313},"button":{"data":{"popup":null},"font":"","link":"http://getweweb.com","size":"","text":{"fr_FR":"Call to action"},"type":"text","zoom":-1,"align":"","class":["ww-class-btn-format-round-small","ww-class-btn-padding-small","ww-class-btn-shadow-bottom-small","ww-class-btn-border-small","ww-anim-fade"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"#000000","backgroundColor":"#FFFFFF"},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.3448095386851411},"textImg":"Coucou !","uniqueId":3,"titleStyle":{"size":"text-small"}},{"img":{"data":{"popup":null},"font":"","link":"","size":"","text":{"fr_FR":""},"type":"text","zoom":-1,"align":"","class":["ww-anim-grow"],"image":"https://wewebprod.s3-eu-west-1.amazonaws.com/public/images/people/ManSubway.jpg","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.41177625137169116},"text":{"data":{"popup":null},"font":"sans-serif","link":"","size":"text-xsmall","text":{"fr_FR":"You can delete the pictures by hitting the \"x\" "},"type":"text","zoom":-1,"align":"center","class":["ww-anim-fade","ww-animspeed-slow"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.6662974680760885},"text2":{"data":{"popup":null},"font":"","link":"","size":"","text":{"fr_FR":""},"type":"text","zoom":-1,"align":"","class":[],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.5308053351622548},"title":{"data":{"popup":null},"font":"sans-serif","link":"","size":"text-xsmall","text":{"fr_FR":"You can add as many picture as you want by hitting the \"+\" "},"type":"text","zoom":-1,"align":"center","class":["ww-anim-fade","ww-animspeed-slow"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.7280240993200022},"button":{"data":{"popup":null},"font":"","link":"#/","size":"","text":{"fr_FR":"Call to action"},"type":"text","zoom":-1,"align":"","class":["ww-class-btn-format-round-small","ww-class-btn-border-small","ww-class-btn-shadow-bottom-small","ww-class-btn-padding-small","ww-anim-fade"],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"#000000","borderColor":"#000000","backgroundColor":"#FFFFFF"},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.4535948637719338},"textImg":"Coucou !","uniqueId":1484325586802.2131}],"subtitle":{"data":{"popup":null},"font":"","link":"","size":"","text":{"fr_FR":""},"type":"text","zoom":-1,"align":"","class":[],"image":"/img/no_image_selected.png","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.3765856590079877},"background":{"data":{"popup":null},"font":"","link":null,"size":"","text":{"fr_FR":""},"type":"text","zoom":-1,"align":"","class":[],"image":"#FFFFFF","ratio":-1,"colors":{"color":"","borderColor":"","backgroundColor":""},"hidden":false,"position":{"x":0,"y":0},"uniqueId":0.9683046020751509},"titleStyle":{"size":"text-big","color":"#263238"},"sectionTitle":"Triple"}
+            this.section.data = this.section.data || {}
 
-            if (_.isEmpty(this.section.data.blocks))
+            if (_.isEmpty(this.section.data.blocks)) {
                 this.section.data.blocks = [this.getNewBlock(), this.getNewBlock(), this.getNewBlock()]
-            
-            if (!this.section.data.background)
+            }
+            if (!this.section.data.background) {
                 this.section.data.background = wwLib.wwObject.getDefault({ type: 'ww-color' });
-            
-            if (!this.section.data.title)
+            }
+            if (!this.section.data.title) {
                 this.section.data.title = wwLib.wwObject.getDefault({ type: 'ww-text' });
-            
-            if (!this.section.data.subtitle)
+            }
+            if (!this.section.data.subtitle) {
                 this.section.data.subtitle = wwLib.wwObject.getDefault({ type: 'ww-text' });
-
+            }
             this.sectionCtrl.update(this.section);
         },
         addBlock(options) {
@@ -150,10 +155,6 @@ export default {
 
 .textimageblock_B .section-subtitle {
     margin-top: 10px;
-}
-
-.textimageblock_B .section-padding {
-    padding: 30px 15px
 }
 
 .textimageblock_B .section-padding {
