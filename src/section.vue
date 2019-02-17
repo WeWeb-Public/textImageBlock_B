@@ -3,9 +3,7 @@
         <!-- wwManager:start -->
         <wwSectionEditMenu v-bind:sectionCtrl="sectionCtrl"></wwSectionEditMenu>
         <!-- wwManager:end -->
-    
         <wwObject v-bind:ww-object="section.data.background" class="background" ww-category="background"></wwObject>
-
         <div class="container section-padding">
             <div class="row">
                 <div class="titles">
@@ -17,9 +15,7 @@
                     </h2>
                 </div>
             </div>
-
             <div class="row margint20">
-                
                 <div class="blocks" v-for="(block, index) in section.data.blocks" :key="block.uniqueId">
                     <wwObject class="block-img-container" v-bind:ww-object="block.img"></wwObject>
                     <wwObject class="block-title" v-bind:ww-object="block.title"></wwObject>
@@ -28,15 +24,12 @@
                     <div class="button-container">
                         <wwObject class="button-wrapper" v-bind:ww-object="block.button"></wwObject>
                     </div>
-
                     <!-- wwManager:start -->
                     <div v-show="editMode" class="edit-button-top-left" @click="removeBlock(index)">
                         <i class="wwi wwi-delete" aria-hidden="true"></i>
                     </div>
                     <!-- wwManager:end -->
-
                 </div>
-
                 <!-- wwManager:start -->
                 <div v-show="editMode" class="blocks add-block">
                     <div class="plus" @click="addBlock()">
@@ -44,7 +37,6 @@
                     </div>
                 </div>
                 <!-- wwManager:end -->
-
             </div>
         </div>
     </div>
@@ -52,7 +44,7 @@
 
 <script>
 export default {
-    name: "TextAndImageBlock_B",
+    name: "__COMPONENT_NAME__",
     props: {
         sectionCtrl: Object
     },
@@ -63,9 +55,11 @@ export default {
         section() {
             return this.sectionCtrl.get();
         },
+        // wwManager:start
         editMode() {
             return this.sectionCtrl.getEditMode() == 'CONTENT'
         }
+        // wwManager:end
     },
     created() {
         this.initData()
@@ -98,6 +92,7 @@ export default {
             }
             this.sectionCtrl.update(this.section);
         },
+        // wwManager:start
         addBlock(options) {
             this.section.data.blocks.push(this.getNewBlock());
             this.sectionCtrl.update(this.section);
@@ -106,6 +101,7 @@ export default {
             this.section.data.blocks.splice(index, 1);
             this.sectionCtrl.update(this.section);
         }
+        // wwManager:end
     }
 };
 </script>
