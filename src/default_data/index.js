@@ -2,10 +2,10 @@ module.exports = [
     {
         name: 'textimageblock_B',
         storeName: {
-            en_GB: "textimageblock_B"
+            en: "textimageblock_B"
         },
         storeDesc: {
-            en_GB: ""
+            en: ""
         }
     }
 ]
